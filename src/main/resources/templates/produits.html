@@ -1,0 +1,117 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{template}">
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+
+<title>Vos produits</title>
+</head>
+
+<body>
+	<div layout:fragment="contents">
+		<div class="row mt-2 ml-1 mr-1">
+			<div class="col-2"></div>
+			<div class="col-8">
+				<div class="card  border-info">
+					<div class="card-header badge badge-info text-wrap">
+						<h6>Liste des produits</h6>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-6">
+								<form th:action="@{/user/rechercheProduit}" method="post">
+									<div class="input-group">
+										<input type="text" name="id" class="form-control"
+											placeholder="Code" />
+										<div class="input-group-append">
+											<button class="btn btn-secondary" type="submit">Ok</button>
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="col-6">
+								<div class="text-right">
+									<a class="btn btn-sm btn-success center"
+										th:href="@{/admin/ajouterProduitAlimentaire}"> <i
+										class="fas fa-plus-circle"></i> Ajout P. Alimentaire
+									</a> <a class="btn btn-sm btn-success center"
+										th:href="@{/admin/ajouterProduitCosmetique}"> <i
+										class="fas fa-plus-circle"></i> Ajout P. cosmétique
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+							<table class="table table-striped  table-borderless">
+								<tr>
+									<th>Code</th>
+									<th>Designation</th>
+									<th>Prix</th>
+									<th>Unité</th>
+									<th>Type</th>
+									<th></th>
+									<th></th>
+								</tr>
+								<tr th:each="p:${listeProduits}">
+									<td width="2%" th:text="${p.codeProduit}"></td>
+									<td width="50%" th:text="${p.desigProduit}"></td>							 -->
+									<td th:text="${p.prixProduit}"></td>
+									<td th:text="${p.uniteProduit}"></td>
+									<td th:text="${p.class.simpleName}"></td>
+									<td width="5%"><a class="btn btn-sm btn-primary"
+										th:href="@{/admin/modifierProduit(id=${p.codeProduit})}">
+											<i class="fas fa-edit"></i>
+									</a></td>
+									<td width="5%"><a class="btn btn-sm btn-danger"
+										onclick="return confirm('Etes-vous sûr de vouloir supprimer cette formation?');"
+										th:href="@{/admin/supprimerProduit(id=${p.codeProduit}, activePage=${activePage}, nbElements = ${nbElements}, size = ${size})}">
+											<i class="fas fa-trash-alt"></i>
+									</a></td>
+								</tr>
+							</table>
+						</div>
+						<nav aria-label="Page navigation">
+							<ul class="pagination">
+								<li
+									th:class="${pg==activePage} ? 'page-item active':'page-item'"
+									th:each="pg:${taillePagination}"><a class="page-link"
+									th:href="@{/user/produits(page=${pg}, size=${size})}"
+									th:text="${pg+1}"> </a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-2"></div>
+	</div>
+
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+		crossorigin="anonymous"></script>
+</body>
+</html>

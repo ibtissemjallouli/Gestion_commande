@@ -1,0 +1,70 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{template}">
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+
+<title>Vos produits</title>
+</head>
+<body>
+<div layout:fragment="contents">
+		<div class="row mt-2 ml-1 mr-1">
+			<div class="col-3"></div>
+			<div class="col-6">
+				<div class="card  border-info">
+					<div class="card-header badge badge-info text-wrap">
+						<h6>Detail Commande</h6> 
+						<h6 th:text="*{id}"></h6> 
+						
+					</div>
+					<div class="card-body ">
+					
+						<div th:object="${commande}" >
+							<p th:text="${commande.etat}"></p>
+							<p th:text="${commande.adresseLivraison}"></p>
+							<p th:text="${commande.dateCommande}"></p>
+							<p th:text="${commande.getTotalCommande}"></p>
+							<p th:text="${commande.getClient.getNomClient}"></p>
+						</div>
+						<div class="text-right" th:if="${commande.etat}=='enCours'">
+						<a class="btn btn-sm btn-success center"
+							th:href="@{/admin/ajouterLigneCommande(id=${id})}"> <i
+							class="fas fa-plus-circle"></i> Ajouter produit
+						</a> 
+					</div>
+						<div class="table-responsive">
+							<table class="table table-striped  table-borderless">
+								<tr>
+									<th>Code Produit</th>
+									<th>quantité</th>
+									<th>prix unitaire</th>
+									<th>total</th>
+								</tr>
+								
+								<tr th:each="l:${commande.getLignes}">
+									<td width="2%" th:text="${l.getProduit.getCodeProduit}"></td>
+									<td width="20%" th:text="${l.getQte}"></td>
+									<td th:text="${l.getProduit.getPrixProduit}"></td>
+									<td th:text="${l.getTotalePrix}"></td>								
+								</tr>
+							</table>
+						
+					</div>
+				</div>
+			</div>
+			<div class="col-3"></div>
+		</div>
+	</div>
+</body>
+</html>
